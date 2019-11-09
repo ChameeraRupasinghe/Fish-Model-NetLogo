@@ -6,7 +6,7 @@ patches-own [ type-of-patch divider-here?]
 fish-bones-own [countdown]
 
 globals[
-  num-fish-removed
+  num-fish-died
   num-fish-caught
   num-fish-max
   displayc
@@ -34,7 +34,7 @@ to go
 
   if any? fish[
     ask one-of fish[
-      remove-this-fish
+      fish-death
     ]
     ask fish [
     wander
@@ -65,7 +65,7 @@ end
 to grow-old
   set age age + 1
   set size size + 0.05
-  if age > 50 [ die ]
+  if age > 50 [ fish-death ]
 end
 
 to wander
@@ -79,15 +79,13 @@ to reproduce
     hatch 1 [
       if random 10 > 0 [ set color red ]   ;; 9 of 10 hatched turtles turn blue
       set age 0
+      ]
     ]
   ]
-
-  ]
-
 end
 
-to remove-this-fish
- set num-fish-removed num-fish-removed + 1
+to fish-death
+ set num-fish-died num-fish-died + 1
  hatch-fish-bones 1 [
    ;; make the fish bones for visualization of this fishes death
     set color [220 220 220 120]
@@ -217,10 +215,10 @@ PENS
 "number" 1.0 0 -13345367 true "" "plot count fish"
 
 SLIDER
-64
-319
-236
-352
+90
+292
+262
+325
 number-of-fish
 number-of-fish
 10
@@ -232,10 +230,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-25
-457
-82
-502
+7
+287
+64
+332
 Caught
 num-fish-caught
 17
@@ -243,30 +241,19 @@ num-fish-caught
 11
 
 SLIDER
-54
-403
-226
-436
+88
+342
+260
+375
 catch-coe
 catch-coe
 0
 100
-51.0
+53.0
 1
 1
 NIL
 HORIZONTAL
-
-MONITOR
-6
-355
-65
-400
-NIL
-displayC
-17
-1
-11
 
 @#$#@#$#@
 ## WHAT IS IT?
