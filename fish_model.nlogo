@@ -28,22 +28,6 @@ to setup
   reset-ticks
 end
 
-
-to set-tank-regions
-  let water-patches nobody
-  ask patches [
-    set type-of-patch "water"
-    if pycor >= 0 [
-    set pcolor blue
- set type-of-patch "fishing-restricted-area" ]]
-  ask patches [ if pycor < 0
-    [ set pcolor cyan
- set type-of-patch "fishing area" ]]
-  set water-patches patches with [type-of-patch = "water"]
-end
-
-
-
 to go
   if not any? fish [ stop ]
   ask fish [
@@ -58,9 +42,24 @@ to go
     ]
   ]
   catch-fish
-;  clean-up-fish-bones
+  clean-up-fish-bones
   tick
 end
+
+
+to set-tank-regions
+  let water-patches nobody
+  ask patches [
+    set type-of-patch "water"
+    if pycor >= 0 [
+    set pcolor blue
+ set type-of-patch "fishing-restricted-area" ]]
+  ask patches [ if pycor < 0
+    [ set pcolor cyan
+ set type-of-patch "fishing area" ]]
+  set water-patches patches with [type-of-patch = "water"]
+end
+
 
 to grow-old
   set age age + 1
@@ -96,15 +95,10 @@ end
 
 
 to clean-up-fish-bones
-  let bone-transparency 0
-  let color-list []
-   ask fish-bones [  ;;; fade away progressively the fish bone shape until the countdown in complete
-     set countdown countdown - 1
-     set bone-transparency (countdown * 255 / 50)
-;    set color-list lput bone-transparency [255 255 255]
-     set color 255
-     if countdown <= 0 [die]
-   ]
+  ask fish-bones[
+    set countdown countdown + 1
+    if countdown = 15 [die]
+  ]
 end
 
 to catch-fish
