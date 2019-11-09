@@ -29,16 +29,16 @@ to setup
 end
 
 to go
-  if not any? fish [ stop ]
-  ask fish [
-    wander
-    reproduce
-    grow-old
-  ]
+  if not any? fish and not any? fish-bones [ stop ]
 
   if any? fish[
     ask one-of fish[
       remove-this-fish
+    ]
+    ask fish [
+    wander
+    reproduce
+    grow-old
     ]
   ]
   catch-fish
@@ -229,10 +229,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-102
-383
-159
-428
+25
+457
+82
+502
 Caught
 num-fish-caught
 17
@@ -248,7 +248,7 @@ catch-coe
 catch-coe
 0
 100
-50.0
+51.0
 1
 1
 NIL
