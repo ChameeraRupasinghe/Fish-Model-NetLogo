@@ -9,6 +9,7 @@ globals[
   num-fish-removed
   num-fish-caught
   num-fish-max
+  displayc
 ]
 
 to setup
@@ -89,7 +90,7 @@ to remove-this-fish
  set num-fish-removed num-fish-removed + 1
  hatch-fish-bones 1 [
    ;; make the fish bones for visualization of this fishes death
-    set color white
+    set color [220 220 220 120]
  ]die
 end
 
@@ -97,7 +98,9 @@ end
 to clean-up-fish-bones
   ask fish-bones[
     set countdown countdown + 1
-    if countdown = 15 [die]
+    let transparency ((50 - countdown) * 255 / 50)
+    set color lput transparency sublist color 0 3
+    if countdown = 50 [die]
   ]
 end
 
@@ -110,7 +113,7 @@ to catch-fish
         if num-fish-caught < catch-cap [
         set num-fish-caught num-fish-caught + 1
         hatch-fish-caught 1 [
-          set color black
+            set color black
         ]die
         ]
       ]
@@ -202,7 +205,7 @@ PLOT
 277
 Population
 time
-count
+count-
 0.0
 200.0
 0.0
@@ -253,6 +256,17 @@ catch-coe
 1
 NIL
 HORIZONTAL
+
+MONITOR
+6
+355
+65
+400
+NIL
+displayC
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
